@@ -2,17 +2,22 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Game {
-    private int bet;
-    private int cash;
+    private int bet = 0;
+    private int cash = 0;
+    private int totalBet;
     private int previousWinCash;
     private int winCash;
     private int numberOfLines;
     private ObservableList<CasinoCell> cellArray;
+    private ObservableList<ObservableList<ImageView>> imagesList;
     private CasinoCell tenCell;
     private CasinoCell JCell;
     private CasinoCell QCell;
@@ -34,16 +39,58 @@ public class Game {
         manCell = new CasinoCell("/images/man.jpg",10,100,1000,5000);
         cellArray = FXCollections.observableArrayList(tenCell,JCell,QCell,KCell,ACell,birdCell,bugCell,pharaohCell,manCell
         );
+        imagesList = FXCollections.observableArrayList();
            }
-           public ObservableList<ImageView> getRandomList(){
-                ObservableList<ImageView> list = FXCollections.observableArrayList();
-                ObservableList<CasinoCell> tempCellsList = cellArray;
+           public void randomizeImagesList(){
                Random random = new Random();
-               while(tempCellsList.size()>0){
-                    int index = random.nextInt(tempCellsList.size());
-                    list.add(tempCellsList.get(index).getImage());
-                    tempCellsList.remove(index);
+               for(int j=0;j<5;j++) {
+                   ObservableList<ImageView> list = FXCollections.observableArrayList();
+                   for (int i = 0; i < cellArray.size(); i++) {
+                       int index = random.nextInt(cellArray.size());
+                       list.add(cellArray.get(index).getImageView());
+                   }
+                   imagesList.add(list);
                }
-                return list;
+
            }
+
+    public CasinoCell getACell() {
+        return ACell;
+    }
+
+    public int getCash() {
+        return cash;
+    }
+
+    public void setCash(int cash) {
+        this.cash = cash;
+    }
+
+    public int getBet() {
+        return bet;
+    }
+
+    public void setBet(int bet) {
+        this.bet = bet;
+    }
+    public void increaseBet(){
+        bet++;
+    }
+    public void decreaseBet(){
+        if (bet>1)bet--;
+    }
+    public void increaseLine(){
+        if(numberOfLines<9) numberOfLines++;
+    }
+
+    public void decreaseLine(){
+        if(numberOfLines>1) numberOfLines--;
+    }
+    public ObservableList<ObservableList<ImageView>> getImagesList() {
+        return imagesList;
+    }
+
+    public int getNumberOfLines() {
+        return numberOfLines;
+    }
 }

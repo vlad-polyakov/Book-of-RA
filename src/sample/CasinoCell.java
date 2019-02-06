@@ -12,18 +12,24 @@ public class CasinoCell {
     private int trippleCellBonus;
     private int fourthCellBonus;
     private int fiveCellBonus;
+    private Image image;
     public CasinoCell(String url, int doubleCellBonus, int trippleCellBonus, int fourthCellBonus, int fiveCellBonus){
         Class<?> clazz = this.getClass();
         InputStream input = clazz.getResourceAsStream(url);
-        Image image = new Image(input);
+        image = new Image(input);
         imageView = new ImageView(image);
+        imageView.setFitHeight(120);
+        imageView.setFitWidth(120);
         this.doubleCellBonus = doubleCellBonus;
         this.trippleCellBonus = trippleCellBonus;
         this.fourthCellBonus = fourthCellBonus;
         this.fiveCellBonus = fiveCellBonus;
     }
-    public ImageView getImage(){
+    public ImageView getImageView(){
         return  imageView;
     }
 
+    public Image getImage() {
+        return image;
+    }
 }
