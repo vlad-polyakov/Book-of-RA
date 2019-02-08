@@ -1,5 +1,7 @@
 package sample;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.canvas.Canvas;
@@ -10,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 import java.io.InputStream;
 
@@ -18,23 +21,28 @@ public class MainWindow {
     private HBox buttonsBox = new HBox(15);
     private Label betNumLabel;
     private Label lineNumLabel;
+    private Label totalBetNumLabel;
     Canvas canvas = new Canvas(800, 450);
     private Controller controller;
     public VBox createScene(){
         VBox mainVBox = new VBox(10);
+
+        mainVBox.setAlignment(Pos.CENTER);
         controller = new Controller(this);
         createButtons();
+       // ImageView logo = new ImageView(createImage("/images/book of ra.png"));
+        //logo.setFitWidth(100);
+        //logo.setFitHeight(100);
         mainVBox.getChildren().addAll(createCellsArea(),buttonsBox);
         return mainVBox;
     }
 
    public Canvas createCellsArea() {
        ObservableList<ObservableList<ImageView>> list = controller.randomizeCells();
-       System.out.println(list.size());
        int x=0;
        int y=0;
        for(int i=0;i<list.get(0).size();i++){
-           canvas.getGraphicsContext2D().drawImage(additionalElem(),x,y,7,150);
+           canvas.getGraphicsContext2D().drawImage(createImage("/images/between.jpg"),x,y,7,150);
            y+=150;
        }
        x+=7;
@@ -42,12 +50,13 @@ public class MainWindow {
            y=0;
            for(int j=0;j<list.get(i).size(); j++) {
                canvas.getGraphicsContext2D().drawImage(list.get(i).get(j).getImage(),x,y,150,150);
-               canvas.getGraphicsContext2D().drawImage(additionalElem(),x+150,y,7,150);
+               canvas.getGraphicsContext2D().drawImage(createImage("/images/between.jpg"),x+150,y,7,150);
 
                y+=150;
            }
            x+=157;
        }
+
        return canvas;
    }
     public void createButtons(){
@@ -85,21 +94,20 @@ public class MainWindow {
         changeLinesBox.getChildren().addAll(fallLineBut,lineNumLabel,riseLineBut);
         VBox totalBetBox = new VBox(5);
         Label totalBetLabel = new Label("Total Bet");
-        Label totalBetNumLabel = new Label("1");
+        totalBetNumLabel = new Label("1");
         totalBetLabel.setFont(new Font("Arial",20));
         totalBetNumLabel.setFont(new Font("Arial",30));
         totalBetBox.getChildren().addAll(totalBetLabel,totalBetNumLabel);
         linesBox.getChildren().addAll(lineLabel,changeLinesBox);
         changeBetsBox.getChildren().addAll(decreaseBetBut,betNumLabel,increaseBetBut);
         betsBox.getChildren().addAll(betLabel,changeBetsBox);
-        betLabel.setStyle("-fx-background-color: dimgray");
         Button playBut = new Button("Play");
         buttonsBox.getChildren().addAll(autoPlayBut,creditBox,betsBox,linesBox,totalBetBox, playBut);
     }
 
-    public Image additionalElem(){
+    public Image createImage(String url){
         Class<?> clazz = this.getClass();
-        InputStream input = clazz.getResourceAsStream("/images/between.jpg");
+        InputStream input = clazz.getResourceAsStream(url);
         Image image = new Image(input);
         return image;
     }
@@ -109,4 +117,8 @@ public class MainWindow {
     public void updateLine(String line){
         lineNumLabel.setText(line);
     }
+    public void updateTotalBet(String total){totalBetNumLabel.setText(total);}
+
+
+
 }

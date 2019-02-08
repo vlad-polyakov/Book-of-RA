@@ -10,7 +10,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         MainWindow mainWindow = new MainWindow();
-        Scene scene = new Scene(mainWindow.createScene(), 790, 550);
+        Scene scene = new Scene(mainWindow.createScene(), 1000, 700);
         scene.getStylesheets().add
                 (this.getClass().getResource("/resources/back.css").toExternalForm());
         primaryStage.setTitle("Book of Ra");

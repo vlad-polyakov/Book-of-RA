@@ -2,20 +2,16 @@ package sample;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Game {
-    private int bet = 0;
+    private int bet = 1;
     private int cash = 0;
     private int totalBet;
     private int previousWinCash;
     private int winCash;
-    private int numberOfLines;
+    private int numberOfLines = 1;
     private ObservableList<CasinoCell> cellArray;
     private ObservableList<ObservableList<ImageView>> imagesList;
     private CasinoCell tenCell;
@@ -80,11 +76,11 @@ public class Game {
         if (bet>1)bet--;
     }
     public void increaseLine(){
-        if(numberOfLines<9) numberOfLines++;
+        if(numberOfLines<9) numberOfLines+=2;
     }
 
     public void decreaseLine(){
-        if(numberOfLines>1) numberOfLines--;
+        if(numberOfLines>1) numberOfLines-=2;
     }
     public ObservableList<ObservableList<ImageView>> getImagesList() {
         return imagesList;
@@ -92,5 +88,12 @@ public class Game {
 
     public int getNumberOfLines() {
         return numberOfLines;
+    }
+    public void calculateTotalBet(){
+        totalBet = bet*numberOfLines;
+    }
+
+    public int getTotalBet() {
+        return totalBet;
     }
 }

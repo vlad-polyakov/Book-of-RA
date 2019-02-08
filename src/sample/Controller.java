@@ -25,18 +25,29 @@ public class Controller {
     }
     public void riseBet(){
         game.increaseBet();
+        game.calculateTotalBet();
         mainWindow.updateBet(String.valueOf(game.getBet()));
+        mainWindow.updateTotalBet(String.valueOf(game.getTotalBet()));
     }
+
     public void lowBet(){
         game.decreaseBet();
+        game.calculateTotalBet();
         mainWindow.updateBet(String.valueOf(game.getBet()));
+        mainWindow.updateTotalBet(String.valueOf(game.getTotalBet()));
     }
+
     public void riseLine(){
         game.increaseLine();
+        game.calculateTotalBet();
         mainWindow.updateLine(String.valueOf(game.getNumberOfLines()));
+        mainWindow.updateTotalBet(String.valueOf(game.getTotalBet()));
     }
+
     public void lowLine(){
         game.decreaseLine();
+        game.calculateTotalBet();
         mainWindow.updateLine(String.valueOf(game.getNumberOfLines()));
+        mainWindow.updateTotalBet(String.valueOf(game.getTotalBet()));
     }
 }
